@@ -1,7 +1,9 @@
 # bandcamp-scraper
 
 [![npm version](https://badge.fury.io/js/bandcamp-scraper.svg)](https://badge.fury.io/js/bandcamp-scraper)
-[![TravisCI Status](https://travis-ci.org/masterT/bandcamp-scraper.svg)](https://travis-ci.org/masterT/bandcamp-scraper)
+![Test](https://github.com/masterT/bandcamp-scraper/workflows/Test/badge.svg?event=push)
+![Test daily](https://github.com/masterT/bandcamp-scraper/workflows/Test/badge.svg?event=schedule)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 [![Bandcamp Logo](assets/bandcamp.png)](https://bandcamp.com)
 
@@ -14,13 +16,11 @@ The scraper allows you to:
 - get album info from an album url
 - get album products from an album url
 
-
 #### Why ?
 
 Because Bandcamp has shut down their public API and don't plan to reopen it.
 
 [https://bandcamp.com/developer](https://bandcamp.com/developer)
-
 
 ## Installation
 
@@ -34,10 +34,8 @@ npm i --save bandcamp-scraper
 
 Search any resources that match the given `params.query` for the current `params.page`.
 
-- params *Object*
-	- query *String*
-	- page *Integer* (default `1`)
-- callback *Function(error, searchResults)*
+- params _Object_ - query _String_ - page _Integer_ (default `1`)
+- callback _Function(error, searchResults)_
 
 #### Search Results
 
@@ -48,33 +46,30 @@ Every resource matches the [search-result JSON schema](/schemas/search-result.js
 #### Example
 
 ```js
-var bandcamp = require('bandcamp-scraper');
+const bandcamp = require('bandcamp-scraper')
 
-var params = {
+const params = {
   query: 'Coeur de pirate',
   page: 1
-};
+}
 
-bandcamp.search(params, function(error, searchResults) {
+bandcamp.search(params, function (error, searchResults) {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(searchResults);
+    console.log(searchResults)
   }
-});
+})
 ```
 
 [View example with output](examples/search.js).
-
 
 ### `getAlbumsWithTag(params, callback)`
 
 Search for albums with the tag `params.tag` for the current `params.page`.
 
-- params *Object*
-	- tag *String*
-	- page *Integer* (default `1`)
-- callback *Function(error, tagResults)*
+- params _Object_ - tag _String_ - page _Integer_ (default `1`)
+- callback _Function(error, tagResults)_
 
 #### Tag Results
 
@@ -83,56 +78,55 @@ An array of album information. Matches the [tag-result JSON schema](/schemas/tag
 #### Example
 
 ```js
-var bandcamp = require('bandcamp-scraper');
+const bandcamp = require('bandcamp-scraper')
 
-var params = {
+const params = {
   tag: 'nuwrld',
   page: 1
-};
+}
 
-bandcamp.getAlbumsWithTag(params, function(error, tagResults) {
+bandcamp.getAlbumsWithTag(params, function (error, tagResults) {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(tagResults);
+    console.log(tagResults)
   }
-});
+})
 ```
 
 [View example with output](examples/tag.js).
 
-
 ### `getAlbumUrls(artistUrl, callback)`
 
 Retrieve the album URLs from an artist URL.
+Please note: for Bandcamp labels you may want to use the `getArtistsUrls` function to retrieve the list of signed artists first.
 
-- artistUrl *String*
-- callback *Function(error, albumUrls)*
+- artistUrl _String_
+- callback _Function(error, albumUrls)_
 
 #### Example
 
 ```js
-var bandcamp = require('bandcamp-scraper');
+const bandcamp = require('bandcamp-scraper')
 
-var artistUrl = 'http://musique.coeurdepirate.com/';
-bandcamp.getAlbumUrls(artistUrl, function(error, albumUrls) {
+const artistUrl = 'http://musique.coeurdepirate.com/'
+bandcamp.getAlbumUrls(artistUrl, function (error, albumUrls) {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(albumUrls);
+    console.log(albumUrls)
   }
-});
+})
 ```
 
 [View example with output](examples/getAlbumUrls.js).
-
 
 ### `getAlbumProducts(albumUrl, callback)`
 
 Retrieves all the album's products from its URL.
 
-- albumUrl *String*
-- callback *Function(error, albumProducts)*
+- albumUrl _String_
+- callback _Function(error, albumProducts)_
 
 #### Album Products
 
@@ -141,53 +135,75 @@ An array of album products that matches the [album-product JSON schema](/schemas
 #### Example
 
 ```js
-var bandcamp = require('bandcamp-scraper');
+const bandcamp = require('bandcamp-scraper')
 
-var albumUrl = 'http://musique.coeurdepirate.com/album/blonde';
-bandcamp.getAlbumProducts(albumUrl, function(error, albumProducts) {
+const albumUrl = 'http://musique.coeurdepirate.com/album/blonde'
+bandcamp.getAlbumProducts(albumUrl, function (error, albumProducts) {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(albumProducts);
+    console.log(albumProducts)
   }
-});
+})
 ```
 
 [View example with output](examples/getAlbumProducts.js).
-
 
 ### `getAlbumInfo(albumUrl, callback)`
 
 Retrieves the album's info from its URL.
 
-- albumUrl *String*
-- callback *Function(error, albumInfo)*
+- albumUrl _String_
+- callback _Function(error, albumInfo)_
 
 #### Album Info
 
-An *Object* that represents the album's info. It matches the [album-info JSON schema](/schemas/album-info.json).
+An _Object_ that represents the album's info. It matches the [album-info JSON schema](/schemas/album-info.json).
 
 #### Example
 
 ```js
-var bandcamp = require('bandcamp-scraper');
+const bandcamp = require('bandcamp-scraper')
 
-var albumUrl = 'http://musique.coeurdepirate.com/album/blonde';
-bandcamp.getAlbumInfo(albumUrl, function(error, albumInfo) {
+const albumUrl = 'http://musique.coeurdepirate.com/album/blonde'
+bandcamp.getAlbumInfo(albumUrl, function (error, albumInfo) {
   if (error) {
-    console.log(error);
+    console.log(error)
   } else {
-    console.log(albumInfo);
+    console.log(albumInfo)
   }
-});
+})
 ```
 
 [View example with output](examples/getAlbumInfo.js).
 
+### `getArtistUrls(labelUrl, callback)`
+
+Retrieves an array of artist URLs from a label's URL for further scraping.
+
+- labelUrl _String_
+- callback _Function(error, albumInfo)_
+
+#### Example
+
+```js
+const bandcamp = require('bandcamp-scraper')
+
+const labelUrl = 'https://randsrecords.bandcamp.com'
+bandcamp.getArtistUrls(labelUrl, function (error, artistsUrls) {
+  if (error) {
+    console.log(error)
+  } else {
+    console.log(artistsUrls)
+  }
+})
+```
+
+[View example with output](examples/getArtistUrls.js).
 
 ## Test
 
-Feature tests are run _daily_, thank to Travis Ci new feature [CRON Jobs](https://docs.travis-ci.com/user/cron-jobs/). This way we know if the scraper is ever broken.
+Feature tests are run _daily_, thanks to [GitHub Action](https://docs.github.com/en/free-pro-team@latest/actions) schedule actions. This way we know if the scraper is ever broken.
 
 Run the test:
 
@@ -195,11 +211,9 @@ Run the test:
 npm test
 ```
 
-
 ## Contributing
 
 Contribution is welcome! Open an issue first.
-
 
 ## License
 
